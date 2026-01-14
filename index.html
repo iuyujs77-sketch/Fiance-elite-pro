@@ -68,7 +68,9 @@
 
         /* PANTALLA DE BLOQUEO */
         #lock-screen { position: fixed; inset: 0; z-index: 9999; background: #050b14; display: flex; flex-col; align-items: center; justify-content: center; padding: 24px; transition: opacity 0.5s ease; }
-        .hidden-content { display: none; }
+        
+        /* Ocultar contenido por defecto */
+        .hidden-content { display: none !important; }
 
         /* ESTILOS DE IMPRESIÓN (PDF) */
         #printable-area { display: none; }
@@ -121,40 +123,83 @@
     </div>
 
     <script>
-        // --- 🔐 SISTEMA DE SEGURIDAD ---
+        // --- 🔐 SISTEMA DE SEGURIDAD (CORREGIDO) ---
         const SALT_SECRETA = "FINANCE_ELITE_2026_V1"; 
-        let deviceID = localStorage.getItem('fe360_device_id');
-        if (!deviceID) {
-            const part1 = Math.random().toString(36).substring(2, 6).toUpperCase();
-            const part2 = Math.random().toString(36).substring(2, 4).toUpperCase();
-            deviceID = `${part1}-${part2}`;
-            localStorage.setItem('fe360_device_id', deviceID);
+        
+        // Esperamos a que el DOM cargue completo antes de ejecutar nada
+        document.addEventListener('DOMContentLoaded', () => {
+            inicializarSistema();
+        });
+
+        function inicializarSistema() {
+            // 1. Obtener o crear ID
+            let deviceID = localStorage.getItem('fe360_device_id');
+            if (!deviceID) {
+                const part1 = Math.random().toString(36).substring(2, 6).toUpperCase();
+                const part2 = Math.random().toString(36).substring(2, 4).toUpperCase();
+                deviceID = `${part1}-${part2}`;
+                localStorage.setItem('fe360_device_id', deviceID);
+            }
+            
+            // 2. Mostrar ID en pantalla de bloqueo
+            const displayEl = document.getElementById('displayDeviceID');
+            if(displayEl) displayEl.innerText = deviceID;
+
+            // 3. Verificar si ya está activado
+            if (localStorage.getItem('fe360_activated') === 'true') {
+                // ACCESO INSTANTANEO (Sin animación para reingresos)
+                const lockScreen = document.getElementById('lock-screen');
+                const appContainer = document.getElementById('app-container');
+                
+                if(lockScreen) lockScreen.style.display = 'none';
+                if(appContainer) {
+                    appContainer.classList.remove('hidden-content');
+                    render(); // Renderiza la app
+                    renderNav();
+                }
+            } else {
+                // Mostrar bloqueo (ya está visible por CSS, nos aseguramos)
+                document.getElementById('lock-screen').style.display = 'flex';
+            }
         }
-        document.getElementById('displayDeviceID').innerText = deviceID;
 
         function generarHash(input) {
-            let str = input + SALT_SECRETA; let hash = 0;
-            for (let i = 0; i < str.length; i++) { hash = ((hash << 5) - hash) + str.charCodeAt(i); hash = hash & hash; }
+            let str = input + SALT_SECRETA; 
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) { 
+                hash = ((hash << 5) - hash) + str.charCodeAt(i); 
+                hash = hash & hash; 
+            }
             const hex = Math.abs(hash).toString(16).toUpperCase().padStart(8, '0'); 
             return hex.substring(0, 4) + '-' + hex.substring(4, 8);
         }
 
         function validarYEntrar() {
             const input = document.getElementById('inputKey').value.trim().toUpperCase();
+            const deviceID = localStorage.getItem('fe360_device_id');
+            
             if (input === generarHash(deviceID)) {
-                localStorage.setItem('fe360_activated', 'true'); abrirApp();
-            } else { document.getElementById('lockError').classList.remove('hidden'); }
+                localStorage.setItem('fe360_activated', 'true'); 
+                
+                // Animación suave solo para el primer desbloqueo
+                const lockScreen = document.getElementById('lock-screen');
+                lockScreen.style.opacity = '0';
+                setTimeout(() => {
+                    lockScreen.style.display = 'none';
+                    const appContainer = document.getElementById('app-container');
+                    appContainer.classList.remove('hidden-content');
+                    appContainer.classList.add('animate-up');
+                    render();
+                    renderNav();
+                }, 500);
+                
+            } else { 
+                const err = document.getElementById('lockError');
+                err.classList.remove('hidden');
+                // Vibración de error
+                if(navigator.vibrate) navigator.vibrate(200);
+            }
         }
-
-        function abrirApp() {
-            document.getElementById('lock-screen').style.display = 'none';
-            const content = document.getElementById('app-container');
-            content.classList.remove('hidden-content');
-            content.classList.add('animate-up');
-            render(); renderNav();
-        }
-
-        if (localStorage.getItem('fe360_activated') === 'true') abrirApp();
 
         // --- ⚙️ LÓGICA DE LA APP ---
         let config = JSON.parse(localStorage.getItem('e360_config')) || {
@@ -180,6 +225,8 @@
 
         function render() {
             const container = document.getElementById('app');
+            if(!container) return; // Seguridad extra
+            
             if (vistaActual === 'corte') renderCorte(container);
             else if (vistaActual === 'metas') renderMetas(container);
             else if (vistaActual === 'config') renderConfig(container);
@@ -189,6 +236,8 @@
 
         function renderNav() {
             const nav = document.getElementById('main-nav');
+            if(!nav) return;
+            
             const items = [
                 { id: 'home', icon: '🏠', label: 'Inicio' },
                 { id: 'corte', icon: '📊', label: 'Corte' },
@@ -307,7 +356,8 @@
             
             const n = new Date();
             n.setMinutes(n.getMinutes() - n.getTimezoneOffset());
-            document.getElementById('fecha_mov').value = n.toISOString().slice(0, 16);
+            const dateInput = document.getElementById('fecha_mov');
+            if(dateInput) dateInput.value = n.toISOString().slice(0, 16);
         }
 
         function renderCorte(c) {
