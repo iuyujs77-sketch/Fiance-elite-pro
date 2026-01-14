@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="theme-color" content="#050b14">
-    <title>Finance Élite 360 - Titanium</title>
+    <title>Finance Élite 360 - Platinum</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <script>
@@ -24,7 +24,6 @@
     <style>
         /* RESET GLOBAL */
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
         body { background-color: #050b14; color: #e2e8f0; overscroll-behavior-y: none; }
         
         /* Glassmorphism */
@@ -33,20 +32,7 @@
         .glass-nav { background: rgba(5, 11, 20, 0.95); backdrop-filter: blur(20px); border-top: 1px solid rgba(255, 255, 255, 0.05); }
         
         /* Inputs Modernos */
-        .input-box { 
-            background: rgba(255,255,255,0.03); 
-            border: 1px solid rgba(255,255,255,0.1); 
-            border-radius: 12px; 
-            padding: 14px 16px; 
-            width: 100%; 
-            max-width: 100%; 
-            color: white; 
-            outline: none; 
-            transition: 0.3s;
-            font-size: 14px; 
-            display: block;
-            min-width: 0; 
-        }
+        .input-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 14px 16px; width: 100%; max-width: 100%; color: white; outline: none; transition: 0.3s; font-size: 14px; display: block; min-width: 0; }
         .input-box:focus { border-color: rgba(212, 175, 55, 0.5); background: rgba(255,255,255,0.05); }
 
         .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -54,14 +40,7 @@
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         
         /* Controles de fecha */
-        input[type="date"], input[type="month"], input[type="datetime-local"] { 
-            color-scheme: dark; 
-            width: 100%;
-            min-width: 0;
-            appearance: none;
-            -webkit-appearance: none; 
-            padding-right: 10px;
-        }
+        input[type="date"], input[type="month"], input[type="datetime-local"] { color-scheme: dark; width: 100%; min-width: 0; appearance: none; -webkit-appearance: none; padding-right: 10px; }
         
         .nav-active { color: #d4af37; opacity: 1; transform: scale(1.1); text-shadow: 0 0 15px rgba(212, 175, 55, 0.4); }
         .nav-inactive { color: #64748b; opacity: 0.7; }
@@ -77,17 +56,7 @@
         @media print {
             body * { visibility: hidden; }
             #printable-area, #printable-area * { visibility: visible; }
-            #printable-area { 
-                display: block; 
-                position: absolute; 
-                left: 0; 
-                top: 0; 
-                width: 100%; 
-                background: white; 
-                color: black; 
-                padding: 20px; 
-                font-family: 'Helvetica', sans-serif; 
-            }
+            #printable-area { display: block; position: absolute; left: 0; top: 0; width: 100%; background: white; color: black; padding: 20px; font-family: 'Helvetica', sans-serif; }
             .glass, .glass-high { border: 1px solid #ccc !important; background: none !important; color: black !important; }
             .text-white { color: black !important; }
         }
@@ -105,14 +74,11 @@
         <div class="glass p-6 rounded-3xl w-full max-w-sm border-t border-white/10 animate-up">
             <p class="text-[10px] font-bold text-slate-500 uppercase mb-2 text-center">ID de Dispositivo</p>
             <div id="displayDeviceID" class="bg-white/5 p-4 rounded-xl text-center text-xl font-mono text-gold font-bold mb-6 select-all border border-gold/10 tracking-widest">...</div>
-            
             <p class="text-[10px] font-bold text-slate-500 uppercase mb-2 text-center">Clave de Activación</p>
             <input type="text" id="inputKey" placeholder="XXXX-XXXX" class="input-box text-center uppercase tracking-widest mb-4 font-mono text-lg">
-            
             <button onclick="validarYEntrar()" class="w-full bg-gold-grad text-black py-4 rounded-2xl font-bold uppercase tracking-widest text-xs shadow-lg shadow-gold/20 active:scale-[0.98] transition-transform">Desbloquear</button>
             <p id="lockError" class="text-red-500 text-xs text-center mt-4 hidden font-bold">Clave incorrecta</p>
         </div>
-        <p class="mt-8 text-[10px] text-slate-600 text-center">Software protegido. Versión Titanium.</p>
     </div>
 
     <div id="printable-area"></div>
@@ -123,16 +89,12 @@
     </div>
 
     <script>
-        // --- 🔐 SISTEMA DE SEGURIDAD (CORREGIDO) ---
+        // --- 🔐 SISTEMA DE SEGURIDAD ---
         const SALT_SECRETA = "FINANCE_ELITE_2026_V1"; 
         
-        // Esperamos a que el DOM cargue completo antes de ejecutar nada
-        document.addEventListener('DOMContentLoaded', () => {
-            inicializarSistema();
-        });
+        document.addEventListener('DOMContentLoaded', () => { inicializarSistema(); });
 
         function inicializarSistema() {
-            // 1. Obtener o crear ID
             let deviceID = localStorage.getItem('fe360_device_id');
             if (!deviceID) {
                 const part1 = Math.random().toString(36).substring(2, 6).toUpperCase();
@@ -140,36 +102,25 @@
                 deviceID = `${part1}-${part2}`;
                 localStorage.setItem('fe360_device_id', deviceID);
             }
-            
-            // 2. Mostrar ID en pantalla de bloqueo
             const displayEl = document.getElementById('displayDeviceID');
             if(displayEl) displayEl.innerText = deviceID;
 
-            // 3. Verificar si ya está activado
             if (localStorage.getItem('fe360_activated') === 'true') {
-                // ACCESO INSTANTANEO (Sin animación para reingresos)
                 const lockScreen = document.getElementById('lock-screen');
                 const appContainer = document.getElementById('app-container');
-                
                 if(lockScreen) lockScreen.style.display = 'none';
                 if(appContainer) {
                     appContainer.classList.remove('hidden-content');
-                    render(); // Renderiza la app
-                    renderNav();
+                    render(); renderNav();
                 }
             } else {
-                // Mostrar bloqueo (ya está visible por CSS, nos aseguramos)
                 document.getElementById('lock-screen').style.display = 'flex';
             }
         }
 
         function generarHash(input) {
-            let str = input + SALT_SECRETA; 
-            let hash = 0;
-            for (let i = 0; i < str.length; i++) { 
-                hash = ((hash << 5) - hash) + str.charCodeAt(i); 
-                hash = hash & hash; 
-            }
+            let str = input + SALT_SECRETA; let hash = 0;
+            for (let i = 0; i < str.length; i++) { hash = ((hash << 5) - hash) + str.charCodeAt(i); hash = hash & hash; }
             const hex = Math.abs(hash).toString(16).toUpperCase().padStart(8, '0'); 
             return hex.substring(0, 4) + '-' + hex.substring(4, 8);
         }
@@ -177,11 +128,8 @@
         function validarYEntrar() {
             const input = document.getElementById('inputKey').value.trim().toUpperCase();
             const deviceID = localStorage.getItem('fe360_device_id');
-            
             if (input === generarHash(deviceID)) {
                 localStorage.setItem('fe360_activated', 'true'); 
-                
-                // Animación suave solo para el primer desbloqueo
                 const lockScreen = document.getElementById('lock-screen');
                 lockScreen.style.opacity = '0';
                 setTimeout(() => {
@@ -189,26 +137,19 @@
                     const appContainer = document.getElementById('app-container');
                     appContainer.classList.remove('hidden-content');
                     appContainer.classList.add('animate-up');
-                    render();
-                    renderNav();
+                    render(); renderNav();
                 }, 500);
-                
             } else { 
                 const err = document.getElementById('lockError');
                 err.classList.remove('hidden');
-                // Vibración de error
                 if(navigator.vibrate) navigator.vibrate(200);
             }
         }
 
-        // --- ⚙️ LÓGICA DE LA APP ---
+        // --- ⚙️ LÓGICA DE LA APP (PLATINUM EDITION) ---
         let config = JSON.parse(localStorage.getItem('e360_config')) || {
             nombre: "Usuario",
-            metodos: [
-                { nombre: 'Efectivo', tipo: 'debito', inicial: 0 },
-                { nombre: 'Amex', tipo: 'credito', inicial: 0 },
-                { nombre: 'BBVA Débito', tipo: 'debito', inicial: 0 }
-            ],
+            metodos: [{ nombre: 'Efectivo', tipo: 'debito', inicial: 0 }, { nombre: 'Amex', tipo: 'credito', inicial: 0 }, { nombre: 'BBVA Débito', tipo: 'debito', inicial: 0 }],
             categorias: ['Comida', 'Súper', 'Gasolina', 'Gym'],
             conceptosIngreso: ['Nómina', 'Bono'],
             recurrentes: [],
@@ -218,6 +159,7 @@
         let vistaActual = 'home';
         let tipoActual = 'gasto';
         let subVistaCorte = 'semana'; 
+        let cuentaFiltroCorte = 'todas'; // Filtro de cuenta en auditoría
         
         const now = new Date();
         now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
@@ -225,8 +167,7 @@
 
         function render() {
             const container = document.getElementById('app');
-            if(!container) return; // Seguridad extra
-            
+            if(!container) return;
             if (vistaActual === 'corte') renderCorte(container);
             else if (vistaActual === 'metas') renderMetas(container);
             else if (vistaActual === 'config') renderConfig(container);
@@ -237,151 +178,78 @@
         function renderNav() {
             const nav = document.getElementById('main-nav');
             if(!nav) return;
-            
-            const items = [
-                { id: 'home', icon: '🏠', label: 'Inicio' },
-                { id: 'corte', icon: '📊', label: 'Corte' },
-                { id: 'metas', icon: '🎯', label: 'Metas' },
-                { id: 'config', icon: '⚙️', label: 'Ajustes' }
-            ];
-            nav.innerHTML = items.map((item, index) => {
-                const isActive = vistaActual === item.id;
-                let html = `<button onclick="cambiarVista('${item.id}')" class="flex flex-col items-center gap-1.5 transition-all duration-300 ${isActive ? 'nav-active' : 'nav-inactive'}">
-                    <span class="text-2xl">${item.icon}</span>
-                    <span class="text-[9px] font-bold uppercase tracking-widest">${item.label}</span>
-                </button>`;
-                if (index === 1) html += `<div class="w-px h-8 bg-white/10 mx-2"></div>`;
-                return html;
-            }).join('');
+            const items = [{id:'home',icon:'🏠',l:'Inicio'},{id:'corte',icon:'📊',l:'Corte'},{id:'metas',icon:'🎯',l:'Metas'},{id:'config',icon:'⚙️',l:'Ajustes'}];
+            nav.innerHTML = items.map((i,idx) => `<button onclick="cambiarVista('${i.id}')" class="flex flex-col items-center gap-1.5 transition-all duration-300 ${vistaActual===i.id?'nav-active':'nav-inactive'}"><span class="text-2xl">${i.icon}</span><span class="text-[9px] font-bold uppercase tracking-widest">${i.l}</span></button>${idx===1?'<div class="w-px h-8 bg-white/10 mx-2"></div>':''}`).join('');
         }
 
-        // --- VISTAS ---
         function renderHome(c) {
             const stats = calcularGlobal();
             c.innerHTML = `
                 <div class="pt-14 px-6 mb-8 animate-up">
                     <div class="flex items-center gap-3 mb-6">
                         <div class="w-10 h-10 rounded-full bg-gold-grad flex items-center justify-center text-slate-900 font-bold text-lg shadow-lg shadow-gold/20">F</div>
-                        <div>
-                            <p class="text-[10px] font-bold text-gold uppercase tracking-[0.2em] mb-0.5">Bienvenido</p>
-                            <h3 class="text-lg font-semibold text-white leading-none">${config.nombre}</h3>
-                        </div>
+                        <div><p class="text-[10px] font-bold text-gold uppercase tracking-[0.2em] mb-0.5">Bienvenido</p><h3 class="text-lg font-semibold text-white leading-none">${config.nombre}</h3></div>
                     </div>
                     <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Patrimonio Neto (Real)</p>
                     <h2 class="text-6xl font-extrabold text-white tracking-tighter mb-4">$${stats.totalBalance.toLocaleString()}</h2>
                 </div>
-
                 <div class="px-6 space-y-8 animate-up">
-                    ${config.recurrentes.length > 0 ? 
-                        `<button onclick="procesarRecurrentes()" class="w-full glass py-3 rounded-2xl font-bold text-xs uppercase text-slate-300 flex items-center justify-center gap-2 hover:bg-white/5 active:scale-[0.98] transition-all border border-gold/20 shadow-lg shadow-gold/5">
-                            <span>♻️</span> Procesar Suscripciones del Mes
-                        </button>` : ''}
-
+                    ${config.recurrentes.length > 0 ? `<button onclick="procesarRecurrentes()" class="w-full glass py-3 rounded-2xl font-bold text-xs uppercase text-slate-300 flex items-center justify-center gap-2 hover:bg-white/5 active:scale-[0.98] transition-all border border-gold/20 shadow-lg shadow-gold/5"><span>♻️</span> Procesar Suscripciones del Mes</button>` : ''}
                     <div class="overflow-x-auto no-scrollbar flex gap-4 pb-4 -mx-6 px-6">
                         ${config.metodos.map(m => {
                             const data = stats.detalles[m.nombre] || { bal: m.inicial || 0, in: 0, out: 0 };
                             const isCred = m.tipo === 'credito';
-                            return `<div class="min-w-[170px] glass-high rounded-3xl p-5 flex flex-col justify-between h-44 relative overflow-hidden">
-                                <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br ${isCred ? 'from-red-500/20' : 'from-emerald-500/20'} to-transparent rounded-bl-full -mr-4 -mt-4 blur-xl"></div>
-                                <div class="flex justify-between items-start z-10">
-                                    <div class="flex flex-col">
-                                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">${isCred ? 'Crédito' : 'Débito'}</span>
-                                        <span class="text-sm font-bold text-white uppercase truncate w-28">${m.nombre}</span>
-                                    </div>
-                                    <div class="w-7 h-7 rounded-full ${isCred ? 'bg-red-500/10 text-red-400' : 'bg-emerald-500/10 text-emerald-400'} flex items-center justify-center text-xs">
-                                        ${isCred ? '💳' : '🏦'}
-                                    </div>
-                                </div>
-                                <div class="z-10">
-                                    <p class="text-[10px] text-slate-400 uppercase mb-1">${isCred ? 'Deuda Total' : 'Disponible'}</p>
-                                    <p class="text-xl font-bold text-white mb-3 tracking-tight">$${Math.abs(data.bal).toLocaleString()}</p>
-                                    <div class="flex gap-2 text-[9px] font-bold">
-                                        <span class="text-emerald-400">↓ $${data.in.toLocaleString()}</span>
-                                        <span class="text-red-400">↑ $${data.out.toLocaleString()}</span>
-                                    </div>
-                                </div>
-                            </div>`;
+                            return `<div class="min-w-[170px] glass-high rounded-3xl p-5 flex flex-col justify-between h-44 relative overflow-hidden"><div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br ${isCred ? 'from-red-500/20' : 'from-emerald-500/20'} to-transparent rounded-bl-full -mr-4 -mt-4 blur-xl"></div><div class="flex justify-between items-start z-10"><div class="flex flex-col"><span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">${isCred ? 'Crédito' : 'Débito'}</span><span class="text-sm font-bold text-white uppercase truncate w-28">${m.nombre}</span></div><div class="w-7 h-7 rounded-full ${isCred ? 'bg-red-500/10 text-red-400' : 'bg-emerald-500/10 text-emerald-400'} flex items-center justify-center text-xs">${isCred ? '💳' : '🏦'}</div></div><div class="z-10"><p class="text-[10px] text-slate-400 uppercase mb-1">${isCred ? 'Deuda Total' : 'Disponible'}</p><p class="text-xl font-bold text-white mb-3 tracking-tight">$${Math.abs(data.bal).toLocaleString()}</p><div class="flex gap-2 text-[9px] font-bold"><span class="text-emerald-400">↓ $${data.in.toLocaleString()}</span><span class="text-red-400">↑ $${data.out.toLocaleString()}</span></div></div></div>`;
                         }).join('')}
                     </div>
-
                     <div class="glass rounded-[30px] p-6 shadow-2xl relative border-t border-white/10">
-                        <div class="flex bg-black/20 rounded-2xl p-1.5 mb-6 border border-white/5">
-                            <button onclick="tipoActual='gasto'; render();" class="flex-1 py-3 rounded-xl text-[10px] font-bold uppercase transition-all ${tipoActual === 'gasto' ? 'bg-white text-black shadow-lg' : 'text-slate-400 hover:text-white'}">Gasto</button>
-                            <button onclick="tipoActual='ingreso'; render();" class="flex-1 py-3 rounded-xl text-[10px] font-bold uppercase transition-all ${tipoActual === 'ingreso' ? 'bg-white text-black shadow-lg' : 'text-slate-400 hover:text-white'}">Ingreso</button>
-                            <button onclick="tipoActual='abono'; render();" class="flex-1 py-3 rounded-xl text-[10px] font-bold uppercase transition-all ${tipoActual === 'abono' ? 'bg-gold-grad text-black shadow-lg shadow-gold/20' : 'text-slate-400 hover:text-white'}">Abonar</button>
-                        </div>
-                        
-                        <div class="relative mb-6">
-                            <span class="absolute top-1/2 -translate-y-1/2 left-0 text-3xl font-light text-slate-500">$</span>
-                            <input type="number" id="monto" inputmode="decimal" placeholder="0.00" class="w-full bg-transparent text-5xl font-bold text-white text-center outline-none placeholder:text-slate-700 py-2">
-                        </div>
-                        
-                        <div class="grid grid-cols-2 gap-4 mb-4">
-                            ${tipoActual === 'abono' ? `
-                                <div class="space-y-1">
-                                    <label class="text-[9px] font-bold text-slate-500 uppercase ml-2">Origen</label>
-                                    <select id="metodo_origen" class="input-box bg-deep">${config.metodos.filter(x=>x.tipo==='debito').map(m=>`<option value="${m.nombre}">${m.nombre}</option>`)}</select>
-                                </div>
-                                <div class="space-y-1">
-                                    <label class="text-[9px] font-bold text-slate-500 uppercase ml-2">Destino</label>
-                                    <select id="metodo" class="input-box bg-deep">${config.metodos.filter(x=>x.tipo==='credito').map(m=>`<option value="${m.nombre}">${m.nombre}</option>`)}</select>
-                                </div>
-                            ` : `
-                                <div class="space-y-1">
-                                    <label class="text-[9px] font-bold text-slate-500 uppercase ml-2">Concepto</label>
-                                    <select id="cat" class="input-box bg-deep">${(tipoActual==='gasto' ? config.categorias : config.conceptosIngreso).map(c=>`<option value="${c}">${c}</option>`)}</select>
-                                </div>
-                                <div class="space-y-1">
-                                    <label class="text-[9px] font-bold text-slate-500 uppercase ml-2">Cuenta</label>
-                                    <select id="metodo" class="input-box bg-deep">${config.metodos.map(m=>`<option value="${m.nombre}">${m.nombre}</option>`)}</select>
-                                </div>
-                            `}
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="text-[9px] font-bold text-slate-500 uppercase ml-2 mb-1 block">Fecha y Hora</label>
-                            <input type="datetime-local" id="fecha_mov" class="input-box bg-deep text-sm w-full">
-                        </div>
-                        
-                        <div class="mb-6">
-                            <label class="text-[9px] font-bold text-slate-500 uppercase ml-2 mb-1 block">Nota / Descripción</label>
-                            <input type="text" id="desc" placeholder="Opcional..." class="input-box bg-deep text-sm w-full">
-                        </div>
-
-                        <button onclick="registrar()" class="w-full bg-gold-grad text-black py-4 rounded-2xl font-bold uppercase tracking-widest text-xs shadow-lg shadow-gold/20 active:scale-[0.98] transition-transform">
-                            Confirmar Operación
-                        </button>
+                        <div class="flex bg-black/20 rounded-2xl p-1.5 mb-6 border border-white/5"><button onclick="tipoActual='gasto'; render();" class="flex-1 py-3 rounded-xl text-[10px] font-bold uppercase transition-all ${tipoActual === 'gasto' ? 'bg-white text-black shadow-lg' : 'text-slate-400 hover:text-white'}">Gasto</button><button onclick="tipoActual='ingreso'; render();" class="flex-1 py-3 rounded-xl text-[10px] font-bold uppercase transition-all ${tipoActual === 'ingreso' ? 'bg-white text-black shadow-lg' : 'text-slate-400 hover:text-white'}">Ingreso</button><button onclick="tipoActual='abono'; render();" class="flex-1 py-3 rounded-xl text-[10px] font-bold uppercase transition-all ${tipoActual === 'abono' ? 'bg-gold-grad text-black shadow-lg shadow-gold/20' : 'text-slate-400 hover:text-white'}">Abonar</button></div>
+                        <div class="relative mb-6"><span class="absolute top-1/2 -translate-y-1/2 left-0 text-3xl font-light text-slate-500">$</span><input type="number" id="monto" inputmode="decimal" placeholder="0.00" class="w-full bg-transparent text-5xl font-bold text-white text-center outline-none placeholder:text-slate-700 py-2"></div>
+                        <div class="grid grid-cols-2 gap-4 mb-4">${tipoActual === 'abono' ? `<div class="space-y-1"><label class="text-[9px] font-bold text-slate-500 uppercase ml-2">Origen</label><select id="metodo_origen" class="input-box bg-deep">${config.metodos.filter(x=>x.tipo==='debito').map(m=>`<option value="${m.nombre}">${m.nombre}</option>`)}</select></div><div class="space-y-1"><label class="text-[9px] font-bold text-slate-500 uppercase ml-2">Destino</label><select id="metodo" class="input-box bg-deep">${config.metodos.filter(x=>x.tipo==='credito').map(m=>`<option value="${m.nombre}">${m.nombre}</option>`)}</select></div>` : `<div class="space-y-1"><label class="text-[9px] font-bold text-slate-500 uppercase ml-2">Concepto</label><select id="cat" class="input-box bg-deep">${(tipoActual==='gasto' ? config.categorias : config.conceptosIngreso).map(c=>`<option value="${c}">${c}</option>`)}</select></div><div class="space-y-1"><label class="text-[9px] font-bold text-slate-500 uppercase ml-2">Cuenta</label><select id="metodo" class="input-box bg-deep">${config.metodos.map(m=>`<option value="${m.nombre}">${m.nombre}</option>`)}</select></div>`}</div>
+                        <div class="mb-4"><label class="text-[9px] font-bold text-slate-500 uppercase ml-2 mb-1 block">Fecha y Hora</label><input type="datetime-local" id="fecha_mov" class="input-box bg-deep text-sm w-full"></div>
+                        <div class="mb-6"><label class="text-[9px] font-bold text-slate-500 uppercase ml-2 mb-1 block">Nota / Descripción</label><input type="text" id="desc" placeholder="Opcional..." class="input-box bg-deep text-sm w-full"></div>
+                        <button onclick="registrar()" class="w-full bg-gold-grad text-black py-4 rounded-2xl font-bold uppercase tracking-widest text-xs shadow-lg shadow-gold/20 active:scale-[0.98] transition-transform">Confirmar Operación</button>
                     </div>
                 </div>`;
-            
-            const n = new Date();
-            n.setMinutes(n.getMinutes() - n.getTimezoneOffset());
-            const dateInput = document.getElementById('fecha_mov');
-            if(dateInput) dateInput.value = n.toISOString().slice(0, 16);
+            const n = new Date(); n.setMinutes(n.getMinutes() - n.getTimezoneOffset());
+            const dInput = document.getElementById('fecha_mov'); if(dInput) dInput.value = n.toISOString().slice(0, 16);
         }
 
         function renderCorte(c) {
-            const data = calcularCorte(subVistaCorte, fechaFiltroCorte);
+            const data = calcularCorte(subVistaCorte, fechaFiltroCorte, cuentaFiltroCorte);
+            
             c.innerHTML = `
                 <div class="pt-14 px-6 fade-in pb-32">
                     <h1 class="text-2xl font-bold text-white mb-8 text-center uppercase tracking-widest">Auditoría <span class="text-gold">Pro</span></h1>
-                    
                     <div class="glass p-1.5 rounded-xl flex justify-between mb-8">
                         <button onclick="subVistaCorte='dia'; render();" class="flex-1 py-2.5 rounded-lg text-[10px] font-bold uppercase transition-all ${subVistaCorte === 'dia' ? 'bg-white text-black shadow' : 'text-slate-400'}">Día</button>
                         <button onclick="subVistaCorte='semana'; render();" class="flex-1 py-2.5 rounded-lg text-[10px] font-bold uppercase transition-all ${subVistaCorte === 'semana' ? 'bg-white text-black shadow' : 'text-slate-400'}">Semana</button>
                         <button onclick="subVistaCorte='mes'; render();" class="flex-1 py-2.5 rounded-lg text-[10px] font-bold uppercase transition-all ${subVistaCorte === 'mes' ? 'bg-white text-black shadow' : 'text-slate-400'}">Mes</button>
                     </div>
 
-                    <div class="mb-2 w-full">
-                        <label class="text-[9px] font-bold text-slate-500 uppercase ml-2 mb-1 block">Periodo de Análisis</label>
-                        <div class="w-full">
-                            <input type="${subVistaCorte==='mes'?'month':'date'}" value="${fechaFiltroCorte.slice(0, subVistaCorte==='mes'?7:10)}" 
-                                   onchange="fechaFiltroCorte=this.value; render();" class="input-box bg-deep text-center font-bold text-lg border-white/10 w-full">
-                        </div>
+                    <div class="mb-4">
+                        <label class="text-[9px] font-bold text-slate-500 uppercase ml-2 mb-1 block">Filtrar por Cuenta</label>
+                        <select onchange="cuentaFiltroCorte=this.value; render();" class="input-box bg-deep text-xs font-bold text-gold border-gold/30">
+                            <option value="todas" ${cuentaFiltroCorte==='todas'?'selected':''}>Todas las Cuentas</option>
+                            ${config.metodos.map(m => `<option value="${m.nombre}" ${cuentaFiltroCorte===m.nombre?'selected':''}>${m.nombre}</option>`).join('')}
+                        </select>
                     </div>
-                    
+
+                    <div class="mb-2 w-full"><label class="text-[9px] font-bold text-slate-500 uppercase ml-2 mb-1 block">Periodo de Análisis</label><div class="w-full"><input type="${subVistaCorte==='mes'?'month':'date'}" value="${fechaFiltroCorte.slice(0, subVistaCorte==='mes'?7:10)}" onchange="fechaFiltroCorte=this.value; render();" class="input-box bg-deep text-center font-bold text-lg border-white/10 w-full"></div></div>
                     <p class="text-center text-[10px] text-gold font-bold mb-8 uppercase tracking-widest opacity-80 border-b border-gold/10 pb-4">${data.rangoTexto}</p>
                     
+                    <div class="overflow-x-auto no-scrollbar flex gap-4 pb-4 -mx-6 px-6 mb-6">
+                        ${config.metodos.map(m => {
+                            const flujo = data.statsCuentas[m.nombre] || { in: 0, out: 0, neto: 0 };
+                            const isCred = m.tipo === 'credito';
+                            const isActive = cuentaFiltroCorte === 'todas' || cuentaFiltroCorte === m.nombre;
+                            return `<div class="min-w-[150px] glass-high rounded-2xl p-4 flex flex-col justify-between h-36 relative overflow-hidden ${isActive ? '' : 'opacity-25 grayscale'} transition-all">
+                                <div class="flex justify-between items-start z-10"><span class="text-[9px] font-bold text-slate-400 uppercase">${m.nombre}</span><div class="text-xs">${isCred?'💳':'🏦'}</div></div>
+                                <div class="z-10"><p class="text-[8px] text-slate-500 uppercase">Flujo Periodo</p><p class="text-lg font-bold text-white mb-2 ${flujo.neto>=0?'text-white':'text-red-400'}">$${flujo.neto.toLocaleString()}</p><div class="flex gap-2 text-[8px] font-bold"><span class="text-emerald-400">+$${flujo.in.toLocaleString()}</span><span class="text-red-400">-$${flujo.out.toLocaleString()}</span></div></div>
+                            </div>`;
+                        }).join('')}
+                    </div>
+
                     <div class="flex gap-3 mb-8">
                         <button onclick="exportarReporte()" class="flex-1 border border-white/10 bg-white/5 py-3 rounded-xl text-xs font-bold uppercase text-slate-300 hover:bg-white/10 transition flex items-center justify-center gap-2">📄 Reporte PDF</button>
                         <button onclick="exportarExcel()" class="flex-1 border border-emerald-500/20 bg-emerald-500/10 py-3 rounded-xl text-xs font-bold uppercase text-emerald-400 hover:bg-emerald-500/20 transition flex items-center justify-center gap-2">📊 Exportar Excel</button>
@@ -389,12 +257,9 @@
 
                     <div class="glass-high rounded-3xl p-6 mb-8 text-center relative overflow-hidden">
                         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-1 bg-gold/50 rounded-b-full shadow-[0_0_20px_rgba(212,175,55,0.5)]"></div>
-                        <p class="text-[10px] text-slate-400 font-bold uppercase mb-2 tracking-widest">Flujo Neto</p>
+                        <p class="text-[10px] text-slate-400 font-bold uppercase mb-2 tracking-widest">Balance Seleccionado</p>
                         <h3 class="text-5xl font-bold text-white tracking-tight mb-6">$${data.neto.toLocaleString()}</h3>
-                        <div class="grid grid-cols-2 gap-4 border-t border-white/5 pt-4">
-                            <div><p class="text-[9px] text-emerald-400 uppercase font-bold mb-1">Ingresos</p><p class="text-xl font-bold text-white">$${data.ingresos.toLocaleString()}</p></div>
-                            <div class="border-l border-white/5"><p class="text-[9px] text-red-400 uppercase font-bold mb-1">Gastos</p><p class="text-xl font-bold text-white">$${data.gastos.toLocaleString()}</p></div>
-                        </div>
+                        <div class="grid grid-cols-2 gap-4 border-t border-white/5 pt-4"><div><p class="text-[9px] text-emerald-400 uppercase font-bold mb-1">Ingresos</p><p class="text-xl font-bold text-white">$${data.ingresos.toLocaleString()}</p></div><div class="border-l border-white/5"><p class="text-[9px] text-red-400 uppercase font-bold mb-1">Gastos</p><p class="text-xl font-bold text-white">$${data.gastos.toLocaleString()}</p></div></div>
                     </div>
 
                     <div>
@@ -404,10 +269,7 @@
                             ${data.lista.map(m => `
                                 <div class="glass p-4 rounded-2xl flex justify-between items-center group hover:bg-white/5 transition-colors">
                                     <div class="flex-1">
-                                        <div class="flex items-center gap-2 mb-1">
-                                            <span class="w-1.5 h-1.5 rounded-full ${m.tipo==='ingreso'?'bg-emerald-400':'bg-red-400'}"></span>
-                                            <p class="text-xs font-bold text-white">${m.cat}</p>
-                                        </div>
+                                        <div class="flex items-center gap-2 mb-1"><span class="w-1.5 h-1.5 rounded-full ${m.tipo==='ingreso'?'bg-emerald-400':'bg-red-400'}"></span><p class="text-xs font-bold text-white">${m.cat}</p></div>
                                         <p class="text-[10px] text-slate-400">${m.desc || 'Sin nota'} <span class="text-slate-600 mx-1">•</span> ${m.metodo}</p>
                                     </div>
                                     <div class="text-right ml-4">
@@ -431,36 +293,42 @@
                     <div class="glass rounded-[30px] p-6 mb-8 border-t border-white/10">
                         <div class="space-y-4">
                             <input type="text" id="meta_nombre" placeholder="Nombre de la Meta" class="input-box bg-deep">
-                            <div class="grid grid-cols-2 gap-4">
-                                <input type="number" id="meta_monto" placeholder="Monto $" class="input-box bg-deep">
-                                <div>
-                                    <label class="text-[9px] font-bold text-gold uppercase ml-1 block mb-1">Fecha Límite</label>
-                                    <input type="date" id="meta_fecha" class="input-box bg-deep text-xs w-full">
-                                </div>
-                            </div>
-                            <div class="flex gap-3 pt-2">
-                                <button onclick="agregarMeta('ahorro')" class="flex-1 bg-slate-800 text-white py-3 rounded-xl font-bold uppercase text-[10px] border border-white/5 hover:bg-slate-700">Ahorro ✈️</button>
-                                <button onclick="agregarMeta('deuda')" class="flex-1 bg-red-900/30 text-red-200 py-3 rounded-xl font-bold uppercase text-[10px] border border-red-500/20 hover:bg-red-900/50">Deuda 📉</button>
-                            </div>
+                            <div class="grid grid-cols-2 gap-4"><input type="number" id="meta_monto" placeholder="Monto $" class="input-box bg-deep"><div><label class="text-[9px] font-bold text-gold uppercase ml-1 block mb-1">Fecha Límite</label><input type="date" id="meta_fecha" class="input-box bg-deep text-xs w-full"></div></div>
+                            <div class="flex gap-3 pt-2"><button onclick="agregarMeta('ahorro')" class="flex-1 bg-slate-800 text-white py-3 rounded-xl font-bold uppercase text-[10px] border border-white/5 hover:bg-slate-700">Ahorro ✈️</button><button onclick="agregarMeta('deuda')" class="flex-1 bg-red-900/30 text-red-200 py-3 rounded-xl font-bold uppercase text-[10px] border border-red-500/20 hover:bg-red-900/50">Deuda 📉</button></div>
                         </div>
                     </div>
-                    <div class="space-y-4">
-                        ${config.metas.map((m, i) => `<div class="glass p-5 rounded-2xl border-l-4 ${m.tipo==='deuda'?'border-red-500':'border-gold'} relative overflow-hidden">
-                            <div class="flex justify-between items-start relative z-10">
-                                <div><h4 class="font-bold text-lg text-white mb-1">${m.nombre}</h4><p class="text-[10px] text-slate-400 uppercase tracking-wider">Meta: $${parseFloat(m.monto).toLocaleString()}</p></div>
-                                <div class="text-right"><p class="text-[9px] font-bold bg-white/10 px-2 py-1 rounded text-white">${m.fecha}</p><button onclick="borrarMeta(${i})" class="text-red-500 text-[9px] font-bold uppercase mt-3">Eliminar</button></div>
-                            </div>
-                        </div>`).join('')}
-                    </div>
+                    <div class="space-y-4">${config.metas.map((m, i) => `<div class="glass p-5 rounded-2xl border-l-4 ${m.tipo==='deuda'?'border-red-500':'border-gold'} relative overflow-hidden"><div class="flex justify-between items-start relative z-10"><div><h4 class="font-bold text-lg text-white mb-1">${m.nombre}</h4><p class="text-[10px] text-slate-400 uppercase tracking-wider">Meta: $${parseFloat(m.monto).toLocaleString()}</p></div><div class="text-right"><p class="text-[9px] font-bold bg-white/10 px-2 py-1 rounded text-white">${m.fecha}</p><button onclick="borrarMeta(${i})" class="text-red-500 text-[9px] font-bold uppercase mt-3">Eliminar</button></div></div></div>`).join('')}</div>
                 </div>`;
         }
 
         function renderConfig(c) {
+            // Se calcula el saldo real para mostrarlo dinámicamente
+            const stats = calcularGlobal();
             c.innerHTML = `
                 <div class="pt-14 px-6 animate-up pb-32">
                     <h1 class="text-2xl font-bold text-white mb-8 text-center uppercase tracking-widest">Configuración</h1>
                     <div class="mb-10"><h3 class="text-[10px] font-bold text-slate-500 uppercase mb-3 ml-2 tracking-widest">Identidad</h3><div class="glass p-4 rounded-2xl"><label class="text-[9px] font-bold text-slate-400 uppercase block mb-2">Titular</label><input type="text" id="titularNom" value="${config.nombre}" onchange="updateNombre(this.value)" class="input-box bg-deep font-bold"></div></div>
-                    <div class="mb-10"><h3 class="text-[10px] font-bold text-slate-500 uppercase mb-3 ml-2 tracking-widest">Cartera & Activos</h3><div class="glass p-5 rounded-3xl space-y-5"><div class="bg-white/5 p-4 rounded-xl border border-white/5"><p class="text-[9px] font-bold text-white uppercase mb-3 text-center">Añadir Nueva Cuenta</p><div class="space-y-3"><div class="grid grid-cols-2 gap-2"><input type="text" id="newCta" placeholder="Nombre" class="input-box bg-deep text-xs"><select id="ctaTipo" class="input-box bg-deep text-xs"><option value="debito">Débito</option><option value="credito">Crédito</option></select></div><div class="flex gap-2"><input type="number" id="ctaInicial" placeholder="Saldo Inicial $" class="input-box bg-deep text-xs flex-1"><button onclick="addItemMetodo()" class="bg-white text-black px-5 rounded-xl font-bold uppercase text-[10px] hover:bg-gray-200">Crear</button></div></div></div><div class="space-y-2">${config.metodos.map((m, i) => `<div class="flex justify-between items-center bg-deep p-3 rounded-xl border border-white/5"><div><p class="text-xs font-bold text-white">${m.nombre} <span class="text-[9px] text-slate-500 ml-1">(${m.tipo === 'credito' ? 'CR' : 'DB'})</span></p><p class="text-[9px] text-gold/80">Inicial: $${parseFloat(m.inicial || 0).toLocaleString()}</p></div><div class="flex gap-3"><button onclick="editarCuenta(${i})" class="text-[9px] font-bold text-slate-300 uppercase">Editar</button><button onclick="removeItem('metodos',${i})" class="text-[9px] font-bold text-red-500 uppercase">×</button></div></div>`).join('')}</div></div></div>
+                    
+                    <div class="mb-10">
+                        <h3 class="text-[10px] font-bold text-slate-500 uppercase mb-3 ml-2 tracking-widest">Cartera & Activos</h3>
+                        <div class="glass p-5 rounded-3xl space-y-5">
+                            <div class="bg-white/5 p-4 rounded-xl border border-white/5"><p class="text-[9px] font-bold text-white uppercase mb-3 text-center">Añadir Nueva Cuenta</p><div class="space-y-3"><div class="grid grid-cols-2 gap-2"><input type="text" id="newCta" placeholder="Nombre" class="input-box bg-deep text-xs"><select id="ctaTipo" class="input-box bg-deep text-xs"><option value="debito">Débito</option><option value="credito">Crédito</option></select></div><div class="flex gap-2"><input type="number" id="ctaInicial" placeholder="Saldo Inicial $" class="input-box bg-deep text-xs flex-1"><button onclick="addItemMetodo()" class="bg-white text-black px-5 rounded-xl font-bold uppercase text-[10px] hover:bg-gray-200">Crear</button></div></div></div>
+                            <div class="space-y-2">
+                                ${config.metodos.map((m, i) => {
+                                    // Cálculo de Saldo Vivo
+                                    const saldoReal = stats.detalles[m.nombre] ? stats.detalles[m.nombre].bal : (m.inicial || 0);
+                                    return `<div class="flex justify-between items-center bg-deep p-3 rounded-xl border border-white/5">
+                                        <div>
+                                            <p class="text-xs font-bold text-white">${m.nombre} <span class="text-[9px] text-slate-500 ml-1">(${m.tipo === 'credito' ? 'CR' : 'DB'})</span></p>
+                                            <p class="text-[9px] ${m.tipo==='credito' && saldoReal > 0 ? 'text-red-400' : 'text-gold/80'}">Actual: $${Math.abs(saldoReal).toLocaleString()}</p>
+                                        </div>
+                                        <div class="flex gap-3"><button onclick="editarCuenta(${i})" class="text-[9px] font-bold text-slate-300 uppercase">Editar</button><button onclick="removeItem('metodos',${i})" class="text-[9px] font-bold text-red-500 uppercase">×</button></div>
+                                    </div>`;
+                                }).join('')}
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="mb-10"><h3 class="text-[10px] font-bold text-slate-500 uppercase mb-3 ml-2 tracking-widest">Conceptos</h3><div class="glass p-5 rounded-3xl mb-4"><p class="text-[9px] font-bold text-emerald-400 uppercase mb-3">Fuentes de Ingreso</p><div class="flex gap-2 mb-4"><input type="text" id="newIngreso" placeholder="Ej: Freelance" class="input-box bg-deep text-xs"><button onclick="addItem('conceptosIngreso', 'newIngreso')" class="bg-emerald-500/20 text-emerald-400 px-4 rounded-xl font-bold border border-emerald-500/20">+</button></div><div class="flex flex-wrap gap-2">${config.conceptosIngreso.map((c,i)=>`<span class="bg-emerald-500/10 text-emerald-300 px-3 py-1.5 rounded-lg text-[9px] font-bold border border-emerald-500/10 flex items-center gap-2">${c} <button onclick="removeItem('conceptosIngreso',${i})">×</button></span>`).join('')}</div></div><div class="glass p-5 rounded-3xl"><p class="text-[9px] font-bold text-red-400 uppercase mb-3">Categorías de Gasto</p><div class="flex gap-2 mb-4"><input type="text" id="newCat" placeholder="Ej: Renta" class="input-box bg-deep text-xs"><button onclick="addItem('categorias', 'newCat')" class="bg-red-500/20 text-red-400 px-4 rounded-xl font-bold border border-red-500/20">+</button></div><div class="flex flex-wrap gap-2">${config.categorias.map((c,i)=>`<span class="bg-red-500/10 text-red-300 px-3 py-1.5 rounded-lg text-[9px] font-bold border border-red-500/10 flex items-center gap-2">${c} <button onclick="removeItem('categorias',${i})">×</button></span>`).join('')}</div></div></div>
                     <div class="mb-10"><h3 class="text-[10px] font-bold text-slate-500 uppercase mb-3 ml-2 tracking-widest">Recurrentes</h3><div class="glass p-5 rounded-3xl"><div class="grid grid-cols-4 gap-2 mb-2"><input type="text" id="recNom" placeholder="Netflix" class="col-span-2 input-box bg-deep text-xs"><input type="number" id="recMon" placeholder="$" class="col-span-1 input-box bg-deep text-xs"><input type="number" id="recDia" placeholder="Día" min="1" max="31" class="col-span-1 input-box bg-deep text-xs text-center"></div><select id="recCta" class="w-full input-box bg-deep text-xs mb-3">${config.metodos.map(m=>`<option value="${m.nombre}">${m.nombre}</option>`)}</select><button onclick="addRecurrente()" class="w-full bg-white text-black py-3 rounded-xl font-bold text-[10px] uppercase hover:bg-gray-200">Guardar Suscripción</button><div class="mt-4 space-y-2">${config.recurrentes.map((r, i) => `<div class="flex justify-between items-center bg-deep p-3 rounded-xl border border-white/5"><span class="text-[10px] font-bold text-slate-300">📅 Día ${r.dia} • ${r.nombre} ($${r.monto})</span><button onclick="removeItem('recurrentes',${i})" class="text-red-400 text-xs font-bold px-2">×</button></div>`).join('')}</div></div></div>
                     <button onclick="if(confirm('¿Borrar todo?')){localStorage.clear();location.reload();}" class="w-full text-red-500/50 font-bold uppercase text-[9px] pb-8 hover:text-red-500 transition-colors">⚠️ Restablecer Fábrica</button>
@@ -469,20 +337,14 @@
 
         // --- EXPORTAR PDF ---
         function exportarReporte() {
-            const data = calcularCorte(subVistaCorte, fechaFiltroCorte);
+            const data = calcularCorte(subVistaCorte, fechaFiltroCorte, cuentaFiltroCorte);
             const div = document.getElementById('printable-area');
             
             div.innerHTML = `
                 <div style="max-width: 800px; margin: 0 auto;">
                     <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #000; padding-bottom: 20px; margin-bottom: 20px;">
-                        <div>
-                            <h1 style="margin: 0; font-size: 24px; font-weight: 800; text-transform: uppercase;">Finance Élite 360</h1>
-                            <p style="margin: 5px 0 0 0; color: #666; font-size: 12px;">Reporte Ejecutivo Financiero</p>
-                        </div>
-                        <div style="text-align: right;">
-                            <p style="margin: 0; font-weight: bold; font-size: 14px;">${config.nombre}</p>
-                            <p style="margin: 0; color: #666; font-size: 12px;">Generado: ${new Date().toLocaleDateString()}</p>
-                        </div>
+                        <div><h1 style="margin: 0; font-size: 24px; font-weight: 800; text-transform: uppercase;">Finance Élite 360</h1><p style="margin: 5px 0 0 0; color: #666; font-size: 12px;">Reporte Ejecutivo: ${cuentaFiltroCorte === 'todas' ? 'Consolidado' : cuentaFiltroCorte}</p></div>
+                        <div style="text-align: right;"><p style="margin: 0; font-weight: bold; font-size: 14px;">${config.nombre}</p><p style="margin: 0; color: #666; font-size: 12px;">${new Date().toLocaleDateString()}</p></div>
                     </div>
                     <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 30px;">
                         <h3 style="margin-top: 0; text-transform: uppercase; font-size: 12px; color: #666; letter-spacing: 1px;">Resumen del Periodo</h3>
@@ -494,36 +356,15 @@
                         </div>
                     </div>
                     <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
-                        <thead>
-                            <tr style="border-bottom: 1px solid #ddd; text-align: left;">
-                                <th style="padding: 10px; text-transform: uppercase; color: #666;">Fecha</th>
-                                <th style="padding: 10px; text-transform: uppercase; color: #666;">Concepto</th>
-                                <th style="padding: 10px; text-transform: uppercase; color: #666;">Método</th>
-                                <th style="padding: 10px; text-transform: uppercase; color: #666; text-align: right;">Monto</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${data.lista.map(m => `
-                                <tr style="border-bottom: 1px solid #eee;">
-                                    <td style="padding: 12px 10px; color: #333;">${m.fecha.replace('T', ' ')}</td>
-                                    <td style="padding: 12px 10px;"><b>${m.cat}</b><br><span style="color: #888; font-size: 10px;">${m.desc||''}</span></td>
-                                    <td style="padding: 12px 10px; color: #555;">${m.metodo}</td>
-                                    <td style="padding: 12px 10px; text-align: right; font-weight: bold; color: ${m.tipo==='ingreso'?'green':'red'};">${m.tipo==='ingreso'?'+':'-'}$${parseFloat(m.monto).toLocaleString()}</td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
+                        <thead><tr style="border-bottom: 1px solid #ddd; text-align: left;"><th style="padding: 10px; text-transform: uppercase; color: #666;">Fecha</th><th style="padding: 10px; text-transform: uppercase; color: #666;">Concepto</th><th style="padding: 10px; text-transform: uppercase; color: #666;">Método</th><th style="padding: 10px; text-transform: uppercase; color: #666; text-align: right;">Monto</th></tr></thead>
+                        <tbody>${data.lista.map(m => `<tr style="border-bottom: 1px solid #eee;"><td style="padding: 12px 10px; color: #333;">${m.fecha.replace('T', ' ')}</td><td style="padding: 12px 10px;"><b>${m.cat}</b><br><span style="color: #888; font-size: 10px;">${m.desc||''}</span></td><td style="padding: 12px 10px; color: #555;">${m.metodo}</td><td style="padding: 12px 10px; text-align: right; font-weight: bold; color: ${m.tipo==='ingreso'?'green':'red'};">${m.tipo==='ingreso'?'+':'-'}$${parseFloat(m.monto).toLocaleString()}</td></tr>`).join('')}</tbody>
                     </table>
-                    <div style="margin-top: 50px; text-align: center; border-top: 1px solid #eee; padding-top: 20px;">
-                        <p style="font-size: 10px; color: #999;">Documento generado automáticamente por Finance Élite 360.</p>
-                    </div>
-                </div>
-            `;
+                </div>`;
             window.print();
         }
 
-        // --- EXPORTAR EXCEL ---
         function exportarExcel() {
-            const data = calcularCorte(subVistaCorte, fechaFiltroCorte);
+            const data = calcularCorte(subVistaCorte, fechaFiltroCorte, cuentaFiltroCorte);
             let csvContent = "\uFEFFFecha,Hora,Categoría,Descripción,Método,Ingreso,Gasto\n";
             data.lista.forEach(m => {
                 const parts = m.fecha.split('T');
@@ -533,12 +374,8 @@
                 csvContent += `${parts[0]},${parts[1]||''},${cat},${desc},${met},${m.tipo==='ingreso'?m.monto:0},${m.tipo==='gasto'?m.monto:0}\n`;
             });
             const encodedUri = encodeURI("data:text/csv;charset=utf-8," + csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `Reporte_FinanceElite_${fechaFiltroCorte}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            const link = document.createElement("a"); link.setAttribute("href", encodedUri); link.setAttribute("download", `Reporte_${cuentaFiltroCorte}.csv`);
+            document.body.appendChild(link); link.click(); document.body.removeChild(link);
         }
 
         // --- LÓGICA ---
@@ -582,19 +419,43 @@
             let total = 0, detalles = {};
             config.metodos.forEach(m => { detalles[m.nombre] = { bal: m.inicial ? parseFloat(m.inicial) : 0, in: 0, out: 0 }; if (m.tipo === 'debito') { total += detalles[m.nombre].bal; } });
             movimientos.forEach(mov => {
-                const cta = config.metodos.find(x => x.nombre === mov.metodo); if(!cta) return; const monto = parseFloat(mov.monto); if (!detalles[mov.metodo]) return;
+                const cta = config.metodos.find(x => x.nombre === mov.metodo); if(!cta || !detalles[mov.metodo]) return;
+                const monto = parseFloat(mov.monto); 
                 if(mov.tipo === 'ingreso') { detalles[mov.metodo].in += monto; if(cta.tipo === 'debito') { total += monto; detalles[mov.metodo].bal += monto; } else { detalles[mov.metodo].bal -= monto; } } 
                 else { detalles[mov.metodo].out += monto; if(cta.tipo === 'debito') { total -= monto; detalles[mov.metodo].bal -= monto; } else { detalles[mov.metodo].bal += monto; } }
             });
             return { totalBalance: total, porMetodo: detalles, detalles };
         }
-        function calcularCorte(periodo, fechaRef) {
+        function calcularCorte(periodo, fechaRef, cuentaFiltro = 'todas') {
             let i = 0, g = 0, lista = []; let fechaInicio, fechaFin, rangoTexto; const refDate = new Date(fechaRef + "T00:00:00"); 
+            
+            // Calculo de fechas
             if (periodo === 'dia') { fechaInicio = new Date(refDate); fechaFin = new Date(refDate); fechaFin.setHours(23, 59, 59, 999); rangoTexto = `Día: ${fechaInicio.toLocaleDateString()}`; } 
             else if (periodo === 'semana') { const day = refDate.getDay(); const diff = refDate.getDate() - day + (day === 0 ? -6 : 1); fechaInicio = new Date(refDate); fechaInicio.setDate(diff); fechaInicio.setHours(0,0,0,0); fechaFin = new Date(fechaInicio); fechaFin.setDate(fechaInicio.getDate() + 6); fechaFin.setHours(23,59,59,999); rangoTexto = `Semana: ${fechaInicio.getDate()}/${fechaInicio.getMonth()+1} al ${fechaFin.getDate()}/${fechaFin.getMonth()+1}`; } 
             else { fechaInicio = new Date(refDate.getFullYear(), refDate.getMonth(), 1); fechaFin = new Date(refDate.getFullYear(), refDate.getMonth() + 1, 0); fechaFin.setHours(23,59,59,999); rangoTexto = `Mes: ${fechaInicio.toLocaleString('default', { month: 'long', year: 'numeric' })}`; }
-            movimientos.forEach((m, originalIndex) => { const movDate = new Date(m.fecha); if (movDate >= fechaInicio && movDate <= fechaFin) { if(m.tipo==='ingreso') i+=parseFloat(m.monto); else g+=parseFloat(m.monto); lista.push({...m, index: originalIndex}); } });
-            return { ingresos: i, gastos: g, neto: i - g, lista, rangoTexto };
+            
+            // Stats por cuenta (para el dashboard en Corte)
+            let statsCuentas = {};
+            config.metodos.forEach(m => statsCuentas[m.nombre] = { in: 0, out: 0, neto: 0 });
+
+            movimientos.forEach((m, originalIndex) => { 
+                const movDate = new Date(m.fecha); 
+                if (movDate >= fechaInicio && movDate <= fechaFin) { 
+                    
+                    // Acumular stats por cuenta (independiente del filtro visual)
+                    if (statsCuentas[m.metodo]) {
+                        if(m.tipo === 'ingreso') { statsCuentas[m.metodo].in += parseFloat(m.monto); statsCuentas[m.metodo].neto += parseFloat(m.monto); }
+                        else { statsCuentas[m.metodo].out += parseFloat(m.monto); statsCuentas[m.metodo].neto -= parseFloat(m.monto); }
+                    }
+
+                    // Aplicar Filtro de Cuenta (para la lista y totales)
+                    if (cuentaFiltro === 'todas' || m.metodo === cuentaFiltro) {
+                        if(m.tipo==='ingreso') i+=parseFloat(m.monto); else g+=parseFloat(m.monto); 
+                        lista.push({...m, index: originalIndex}); 
+                    }
+                } 
+            });
+            return { ingresos: i, gastos: g, neto: i - g, lista, rangoTexto, statsCuentas };
         }
         function save() { localStorage.setItem('e360_config', JSON.stringify(config)); localStorage.setItem('e360_movs', JSON.stringify(movimientos)); }
         function cambiarVista(v) { vistaActual = v; window.scrollTo(0,0); render(); }
