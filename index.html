@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="theme-color" content="#050b14">
-    <title>Finance Élite 360</title>
+    <title>Finance Élite 360 - Titanium</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <script>
@@ -22,37 +22,72 @@
         }
     </script>
     <style>
+        /* RESET GLOBAL */
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
         body { background-color: #050b14; color: #e2e8f0; overscroll-behavior-y: none; }
         
+        /* Glassmorphism */
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); }
         .glass-high { background: rgba(255, 255, 255, 0.07); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
         .glass-nav { background: rgba(5, 11, 20, 0.95); backdrop-filter: blur(20px); border-top: 1px solid rgba(255, 255, 255, 0.05); }
         
-        .input-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 14px 16px; width: 100%; max-width: 100%; color: white; outline: none; transition: 0.3s; font-size: 14px; display: block; min-width: 0; }
+        /* Inputs Modernos */
+        .input-box { 
+            background: rgba(255,255,255,0.03); 
+            border: 1px solid rgba(255,255,255,0.1); 
+            border-radius: 12px; 
+            padding: 14px 16px; 
+            width: 100%; 
+            max-width: 100%; 
+            color: white; 
+            outline: none; 
+            transition: 0.3s;
+            font-size: 14px; 
+            display: block;
+            min-width: 0; 
+        }
         .input-box:focus { border-color: rgba(212, 175, 55, 0.5); background: rgba(255,255,255,0.05); }
 
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .animate-up { animation: slideUp 0.4s ease-out forwards; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         
-        input[type="date"], input[type="month"], input[type="datetime-local"] { color-scheme: dark; width: 100%; min-width: 0; appearance: none; -webkit-appearance: none; padding-right: 10px; }
+        /* Controles de fecha */
+        input[type="date"], input[type="month"], input[type="datetime-local"] { 
+            color-scheme: dark; 
+            width: 100%;
+            min-width: 0;
+            appearance: none;
+            -webkit-appearance: none; 
+            padding-right: 10px;
+        }
+        
         .nav-active { color: #d4af37; opacity: 1; transform: scale(1.1); text-shadow: 0 0 15px rgba(212, 175, 55, 0.4); }
         .nav-inactive { color: #64748b; opacity: 0.7; }
 
-        /* Lock Screen */
+        /* PANTALLA DE BLOQUEO */
         #lock-screen { position: fixed; inset: 0; z-index: 9999; background: #050b14; display: flex; flex-col; align-items: center; justify-content: center; padding: 24px; transition: opacity 0.5s ease; }
         .hidden-content { display: none; }
 
-        /* --- ESTILOS DE IMPRESIÓN PDF --- */
+        /* ESTILOS DE IMPRESIÓN (PDF) */
         #printable-area { display: none; }
         @media print {
             body * { visibility: hidden; }
             #printable-area, #printable-area * { visibility: visible; }
-            #printable-area { display: block; position: absolute; left: 0; top: 0; width: 100%; background: white; color: black; padding: 20px; font-family: 'Helvetica', sans-serif; }
+            #printable-area { 
+                display: block; 
+                position: absolute; 
+                left: 0; 
+                top: 0; 
+                width: 100%; 
+                background: white; 
+                color: black; 
+                padding: 20px; 
+                font-family: 'Helvetica', sans-serif; 
+            }
+            .glass, .glass-high { border: 1px solid #ccc !important; background: none !important; color: black !important; }
             .text-white { color: black !important; }
-            .bg-dark-grad { background: white !important; }
-            .glass, .glass-high { background: none !important; border: 1px solid #ddd !important; backdrop-filter: none !important; color: black !important; }
         }
     </style>
 </head>
@@ -62,16 +97,20 @@
         <div class="text-center mb-8 animate-up">
             <div class="w-20 h-20 rounded-full bg-gold-grad flex items-center justify-center text-slate-900 font-bold text-4xl shadow-lg shadow-gold/20 mx-auto mb-6">F</div>
             <h1 class="text-2xl font-bold text-white mb-2">Finance Élite 360</h1>
-            <p class="text-slate-400 text-xs tracking-widest uppercase">Sistema Premium</p>
+            <p class="text-slate-400 text-xs tracking-widest uppercase">Activación Requerida</p>
         </div>
+        
         <div class="glass p-6 rounded-3xl w-full max-w-sm border-t border-white/10 animate-up">
             <p class="text-[10px] font-bold text-slate-500 uppercase mb-2 text-center">ID de Dispositivo</p>
             <div id="displayDeviceID" class="bg-white/5 p-4 rounded-xl text-center text-xl font-mono text-gold font-bold mb-6 select-all border border-gold/10 tracking-widest">...</div>
+            
             <p class="text-[10px] font-bold text-slate-500 uppercase mb-2 text-center">Clave de Activación</p>
             <input type="text" id="inputKey" placeholder="XXXX-XXXX" class="input-box text-center uppercase tracking-widest mb-4 font-mono text-lg">
+            
             <button onclick="validarYEntrar()" class="w-full bg-gold-grad text-black py-4 rounded-2xl font-bold uppercase tracking-widest text-xs shadow-lg shadow-gold/20 active:scale-[0.98] transition-transform">Desbloquear</button>
             <p id="lockError" class="text-red-500 text-xs text-center mt-4 hidden font-bold">Clave incorrecta</p>
         </div>
+        <p class="mt-8 text-[10px] text-slate-600 text-center">Software protegido. Versión Titanium.</p>
     </div>
 
     <div id="printable-area"></div>
@@ -82,7 +121,7 @@
     </div>
 
     <script>
-        // --- SEGURIDAD ---
+        // --- 🔐 SISTEMA DE SEGURIDAD ---
         const SALT_SECRETA = "FINANCE_ELITE_2026_V1"; 
         let deviceID = localStorage.getItem('fe360_device_id');
         if (!deviceID) {
@@ -101,7 +140,8 @@
         }
 
         function validarYEntrar() {
-            if (document.getElementById('inputKey').value.trim().toUpperCase() === generarHash(deviceID)) {
+            const input = document.getElementById('inputKey').value.trim().toUpperCase();
+            if (input === generarHash(deviceID)) {
                 localStorage.setItem('fe360_activated', 'true'); abrirApp();
             } else { document.getElementById('lockError').classList.remove('hidden'); }
         }
@@ -116,27 +156,53 @@
 
         if (localStorage.getItem('fe360_activated') === 'true') abrirApp();
 
-        // --- APP LOGIC ---
-        let config = JSON.parse(localStorage.getItem('e360_config')) || { nombre: "Usuario", metodos: [{nombre:'Efectivo',tipo:'debito',inicial:0},{nombre:'Amex',tipo:'credito',inicial:0}], categorias: ['Comida','Gasolina'], conceptosIngreso: ['Nómina'], recurrentes: [], metas: [] };
+        // --- ⚙️ LÓGICA DE LA APP ---
+        let config = JSON.parse(localStorage.getItem('e360_config')) || {
+            nombre: "Usuario",
+            metodos: [
+                { nombre: 'Efectivo', tipo: 'debito', inicial: 0 },
+                { nombre: 'Amex', tipo: 'credito', inicial: 0 },
+                { nombre: 'BBVA Débito', tipo: 'debito', inicial: 0 }
+            ],
+            categorias: ['Comida', 'Súper', 'Gasolina', 'Gym'],
+            conceptosIngreso: ['Nómina', 'Bono'],
+            recurrentes: [],
+            metas: []
+        };
         let movimientos = JSON.parse(localStorage.getItem('e360_movs')) || [];
-        let vistaActual = 'home'; let tipoActual = 'gasto'; let subVistaCorte = 'semana';
-        const now = new Date(); now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        let vistaActual = 'home';
+        let tipoActual = 'gasto';
+        let subVistaCorte = 'semana'; 
+        
+        const now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
         let fechaFiltroCorte = now.toISOString().slice(0, 10);
 
         function render() {
-            const c = document.getElementById('app');
-            if (vistaActual === 'corte') renderCorte(c);
-            else if (vistaActual === 'metas') renderMetas(c);
-            else if (vistaActual === 'config') renderConfig(c);
-            else renderHome(c);
+            const container = document.getElementById('app');
+            if (vistaActual === 'corte') renderCorte(container);
+            else if (vistaActual === 'metas') renderMetas(container);
+            else if (vistaActual === 'config') renderConfig(container);
+            else renderHome(container);
             renderNav();
         }
 
         function renderNav() {
             const nav = document.getElementById('main-nav');
-            const items = [{id:'home',icon:'🏠',l:'Inicio'},{id:'corte',icon:'📊',l:'Corte'},{id:'metas',icon:'🎯',l:'Metas'},{id:'config',icon:'⚙️',l:'Ajustes'}];
-            nav.innerHTML = items.map((i,idx) => {
-                return `<button onclick="cambiarVista('${i.id}')" class="flex flex-col items-center gap-1.5 transition-all duration-300 ${vistaActual===i.id?'nav-active':'nav-inactive'}"><span class="text-2xl">${i.icon}</span><span class="text-[9px] font-bold uppercase tracking-widest">${i.l}</span></button>${idx===1?'<div class="w-px h-8 bg-white/10 mx-2"></div>':''}`;
+            const items = [
+                { id: 'home', icon: '🏠', label: 'Inicio' },
+                { id: 'corte', icon: '📊', label: 'Corte' },
+                { id: 'metas', icon: '🎯', label: 'Metas' },
+                { id: 'config', icon: '⚙️', label: 'Ajustes' }
+            ];
+            nav.innerHTML = items.map((item, index) => {
+                const isActive = vistaActual === item.id;
+                let html = `<button onclick="cambiarVista('${item.id}')" class="flex flex-col items-center gap-1.5 transition-all duration-300 ${isActive ? 'nav-active' : 'nav-inactive'}">
+                    <span class="text-2xl">${item.icon}</span>
+                    <span class="text-[9px] font-bold uppercase tracking-widest">${item.label}</span>
+                </button>`;
+                if (index === 1) html += `<div class="w-px h-8 bg-white/10 mx-2"></div>`;
+                return html;
             }).join('');
         }
 
@@ -145,22 +211,102 @@
             const stats = calcularGlobal();
             c.innerHTML = `
                 <div class="pt-14 px-6 mb-8 animate-up">
-                    <div class="flex items-center gap-3 mb-6"><div class="w-10 h-10 rounded-full bg-gold-grad flex items-center justify-center text-slate-900 font-bold text-lg shadow-lg shadow-gold/20">F</div><div><p class="text-[10px] font-bold text-gold uppercase tracking-[0.2em] mb-0.5">Bienvenido</p><h3 class="text-lg font-semibold text-white leading-none">${config.nombre}</h3></div></div>
-                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Patrimonio Neto (Real)</p><h2 class="text-6xl font-extrabold text-white tracking-tighter mb-4">$${stats.totalBalance.toLocaleString()}</h2>
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-full bg-gold-grad flex items-center justify-center text-slate-900 font-bold text-lg shadow-lg shadow-gold/20">F</div>
+                        <div>
+                            <p class="text-[10px] font-bold text-gold uppercase tracking-[0.2em] mb-0.5">Bienvenido</p>
+                            <h3 class="text-lg font-semibold text-white leading-none">${config.nombre}</h3>
+                        </div>
+                    </div>
+                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Patrimonio Neto (Real)</p>
+                    <h2 class="text-6xl font-extrabold text-white tracking-tighter mb-4">$${stats.totalBalance.toLocaleString()}</h2>
                 </div>
+
                 <div class="px-6 space-y-8 animate-up">
-                    ${config.recurrentes.length>0 ? `<button onclick="procesarRecurrentes()" class="w-full glass py-3 rounded-2xl font-bold text-xs uppercase text-slate-300 flex items-center justify-center gap-2 hover:bg-white/5 active:scale-[0.98] transition-all border border-gold/20"><span>♻️</span> Procesar Suscripciones</button>`:''}
-                    <div class="overflow-x-auto no-scrollbar flex gap-4 pb-4 -mx-6 px-6">${config.metodos.map(m => { const data = stats.detalles[m.nombre]||{bal:m.inicial||0,in:0,out:0}; const isCred=m.tipo==='credito'; return `<div class="min-w-[170px] glass-high rounded-3xl p-5 flex flex-col justify-between h-44 relative overflow-hidden"><div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br ${isCred?'from-red-500/20':'from-emerald-500/20'} to-transparent rounded-bl-full -mr-4 -mt-4 blur-xl"></div><div class="flex justify-between items-start z-10"><div class="flex flex-col"><span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">${isCred?'Crédito':'Débito'}</span><span class="text-sm font-bold text-white uppercase truncate w-28">${m.nombre}</span></div><div class="w-7 h-7 rounded-full ${isCred?'bg-red-500/10 text-red-400':'bg-emerald-500/10 text-emerald-400'} flex items-center justify-center text-xs">${isCred?'💳':'🏦'}</div></div><div class="z-10"><p class="text-[10px] text-slate-400 uppercase mb-1">${isCred?'Deuda Total':'Disponible'}</p><p class="text-xl font-bold text-white mb-3 tracking-tight">$${Math.abs(data.bal).toLocaleString()}</p><div class="flex gap-2 text-[9px] font-bold"><span class="text-emerald-400">↓ $${data.in.toLocaleString()}</span><span class="text-red-400">↑ $${data.out.toLocaleString()}</span></div></div></div>`; }).join('')}</div>
+                    ${config.recurrentes.length > 0 ? 
+                        `<button onclick="procesarRecurrentes()" class="w-full glass py-3 rounded-2xl font-bold text-xs uppercase text-slate-300 flex items-center justify-center gap-2 hover:bg-white/5 active:scale-[0.98] transition-all border border-gold/20 shadow-lg shadow-gold/5">
+                            <span>♻️</span> Procesar Suscripciones del Mes
+                        </button>` : ''}
+
+                    <div class="overflow-x-auto no-scrollbar flex gap-4 pb-4 -mx-6 px-6">
+                        ${config.metodos.map(m => {
+                            const data = stats.detalles[m.nombre] || { bal: m.inicial || 0, in: 0, out: 0 };
+                            const isCred = m.tipo === 'credito';
+                            return `<div class="min-w-[170px] glass-high rounded-3xl p-5 flex flex-col justify-between h-44 relative overflow-hidden">
+                                <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br ${isCred ? 'from-red-500/20' : 'from-emerald-500/20'} to-transparent rounded-bl-full -mr-4 -mt-4 blur-xl"></div>
+                                <div class="flex justify-between items-start z-10">
+                                    <div class="flex flex-col">
+                                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">${isCred ? 'Crédito' : 'Débito'}</span>
+                                        <span class="text-sm font-bold text-white uppercase truncate w-28">${m.nombre}</span>
+                                    </div>
+                                    <div class="w-7 h-7 rounded-full ${isCred ? 'bg-red-500/10 text-red-400' : 'bg-emerald-500/10 text-emerald-400'} flex items-center justify-center text-xs">
+                                        ${isCred ? '💳' : '🏦'}
+                                    </div>
+                                </div>
+                                <div class="z-10">
+                                    <p class="text-[10px] text-slate-400 uppercase mb-1">${isCred ? 'Deuda Total' : 'Disponible'}</p>
+                                    <p class="text-xl font-bold text-white mb-3 tracking-tight">$${Math.abs(data.bal).toLocaleString()}</p>
+                                    <div class="flex gap-2 text-[9px] font-bold">
+                                        <span class="text-emerald-400">↓ $${data.in.toLocaleString()}</span>
+                                        <span class="text-red-400">↑ $${data.out.toLocaleString()}</span>
+                                    </div>
+                                </div>
+                            </div>`;
+                        }).join('')}
+                    </div>
+
                     <div class="glass rounded-[30px] p-6 shadow-2xl relative border-t border-white/10">
-                        <div class="flex bg-black/20 rounded-2xl p-1.5 mb-6 border border-white/5"><button onclick="tipoActual='gasto'; render();" class="flex-1 py-3 rounded-xl text-[10px] font-bold uppercase transition-all ${tipoActual==='gasto'?'bg-white text-black shadow-lg':'text-slate-400'}">Gasto</button><button onclick="tipoActual='ingreso'; render();" class="flex-1 py-3 rounded-xl text-[10px] font-bold uppercase transition-all ${tipoActual==='ingreso'?'bg-white text-black shadow-lg':'text-slate-400'}">Ingreso</button><button onclick="tipoActual='abono'; render();" class="flex-1 py-3 rounded-xl text-[10px] font-bold uppercase transition-all ${tipoActual==='abono'?'bg-gold-grad text-black shadow-lg':'text-slate-400'}">Abonar</button></div>
-                        <div class="relative mb-6"><span class="absolute top-1/2 -translate-y-1/2 left-0 text-3xl font-light text-slate-500">$</span><input type="number" id="monto" inputmode="decimal" placeholder="0.00" class="w-full bg-transparent text-5xl font-bold text-white text-center outline-none placeholder:text-slate-700 py-2"></div>
-                        <div class="grid grid-cols-2 gap-4 mb-4">${tipoActual==='abono'?`<div class="space-y-1"><label class="text-[9px] font-bold text-slate-500 uppercase ml-2">Origen</label><select id="metodo_origen" class="input-box bg-deep">${config.metodos.filter(x=>x.tipo==='debito').map(m=>`<option value="${m.nombre}">${m.nombre}</option>`)}</select></div><div class="space-y-1"><label class="text-[9px] font-bold text-slate-500 uppercase ml-2">Destino</label><select id="metodo" class="input-box bg-deep">${config.metodos.filter(x=>x.tipo==='credito').map(m=>`<option value="${m.nombre}">${m.nombre}</option>`)}</select></div>`:`<div class="space-y-1"><label class="text-[9px] font-bold text-slate-500 uppercase ml-2">Concepto</label><select id="cat" class="input-box bg-deep">${(tipoActual==='gasto'?config.categorias:config.conceptosIngreso).map(c=>`<option value="${c}">${c}</option>`)}</select></div><div class="space-y-1"><label class="text-[9px] font-bold text-slate-500 uppercase ml-2">Cuenta</label><select id="metodo" class="input-box bg-deep">${config.metodos.map(m=>`<option value="${m.nombre}">${m.nombre}</option>`)}</select></div>`}</div>
-                        <div class="mb-4"><label class="text-[9px] font-bold text-slate-500 uppercase ml-2 mb-1 block">Fecha y Hora</label><input type="datetime-local" id="fecha_mov" class="input-box bg-deep text-sm w-full"></div>
-                        <div class="mb-6"><label class="text-[9px] font-bold text-slate-500 uppercase ml-2 mb-1 block">Nota</label><input type="text" id="desc" placeholder="Opcional..." class="input-box bg-deep text-sm w-full"></div>
-                        <button onclick="registrar()" class="w-full bg-gold-grad text-black py-4 rounded-2xl font-bold uppercase tracking-widest text-xs shadow-lg active:scale-[0.98] transition-transform">Confirmar</button>
+                        <div class="flex bg-black/20 rounded-2xl p-1.5 mb-6 border border-white/5">
+                            <button onclick="tipoActual='gasto'; render();" class="flex-1 py-3 rounded-xl text-[10px] font-bold uppercase transition-all ${tipoActual === 'gasto' ? 'bg-white text-black shadow-lg' : 'text-slate-400 hover:text-white'}">Gasto</button>
+                            <button onclick="tipoActual='ingreso'; render();" class="flex-1 py-3 rounded-xl text-[10px] font-bold uppercase transition-all ${tipoActual === 'ingreso' ? 'bg-white text-black shadow-lg' : 'text-slate-400 hover:text-white'}">Ingreso</button>
+                            <button onclick="tipoActual='abono'; render();" class="flex-1 py-3 rounded-xl text-[10px] font-bold uppercase transition-all ${tipoActual === 'abono' ? 'bg-gold-grad text-black shadow-lg shadow-gold/20' : 'text-slate-400 hover:text-white'}">Abonar</button>
+                        </div>
+                        
+                        <div class="relative mb-6">
+                            <span class="absolute top-1/2 -translate-y-1/2 left-0 text-3xl font-light text-slate-500">$</span>
+                            <input type="number" id="monto" inputmode="decimal" placeholder="0.00" class="w-full bg-transparent text-5xl font-bold text-white text-center outline-none placeholder:text-slate-700 py-2">
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            ${tipoActual === 'abono' ? `
+                                <div class="space-y-1">
+                                    <label class="text-[9px] font-bold text-slate-500 uppercase ml-2">Origen</label>
+                                    <select id="metodo_origen" class="input-box bg-deep">${config.metodos.filter(x=>x.tipo==='debito').map(m=>`<option value="${m.nombre}">${m.nombre}</option>`)}</select>
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="text-[9px] font-bold text-slate-500 uppercase ml-2">Destino</label>
+                                    <select id="metodo" class="input-box bg-deep">${config.metodos.filter(x=>x.tipo==='credito').map(m=>`<option value="${m.nombre}">${m.nombre}</option>`)}</select>
+                                </div>
+                            ` : `
+                                <div class="space-y-1">
+                                    <label class="text-[9px] font-bold text-slate-500 uppercase ml-2">Concepto</label>
+                                    <select id="cat" class="input-box bg-deep">${(tipoActual==='gasto' ? config.categorias : config.conceptosIngreso).map(c=>`<option value="${c}">${c}</option>`)}</select>
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="text-[9px] font-bold text-slate-500 uppercase ml-2">Cuenta</label>
+                                    <select id="metodo" class="input-box bg-deep">${config.metodos.map(m=>`<option value="${m.nombre}">${m.nombre}</option>`)}</select>
+                                </div>
+                            `}
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="text-[9px] font-bold text-slate-500 uppercase ml-2 mb-1 block">Fecha y Hora</label>
+                            <input type="datetime-local" id="fecha_mov" class="input-box bg-deep text-sm w-full">
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label class="text-[9px] font-bold text-slate-500 uppercase ml-2 mb-1 block">Nota / Descripción</label>
+                            <input type="text" id="desc" placeholder="Opcional..." class="input-box bg-deep text-sm w-full">
+                        </div>
+
+                        <button onclick="registrar()" class="w-full bg-gold-grad text-black py-4 rounded-2xl font-bold uppercase tracking-widest text-xs shadow-lg shadow-gold/20 active:scale-[0.98] transition-transform">
+                            Confirmar Operación
+                        </button>
                     </div>
                 </div>`;
-            const n = new Date(); n.setMinutes(n.getMinutes() - n.getTimezoneOffset());
+            
+            const n = new Date();
+            n.setMinutes(n.getMinutes() - n.getTimezoneOffset());
             document.getElementById('fecha_mov').value = n.toISOString().slice(0, 16);
         }
 
@@ -169,17 +315,62 @@
             c.innerHTML = `
                 <div class="pt-14 px-6 fade-in pb-32">
                     <h1 class="text-2xl font-bold text-white mb-8 text-center uppercase tracking-widest">Auditoría <span class="text-gold">Pro</span></h1>
-                    <div class="glass p-1.5 rounded-xl flex justify-between mb-8"><button onclick="subVistaCorte='dia'; render();" class="flex-1 py-2.5 rounded-lg text-[10px] font-bold uppercase transition-all ${subVistaCorte==='dia'?'bg-white text-black shadow':'text-slate-400'}">Día</button><button onclick="subVistaCorte='semana'; render();" class="flex-1 py-2.5 rounded-lg text-[10px] font-bold uppercase transition-all ${subVistaCorte==='semana'?'bg-white text-black shadow':'text-slate-400'}">Semana</button><button onclick="subVistaCorte='mes'; render();" class="flex-1 py-2.5 rounded-lg text-[10px] font-bold uppercase transition-all ${subVistaCorte==='mes'?'bg-white text-black shadow':'text-slate-400'}">Mes</button></div>
-                    <div class="mb-2 w-full"><label class="text-[9px] font-bold text-slate-500 uppercase ml-2 mb-1 block">Periodo de Análisis</label><div class="w-full"><input type="${subVistaCorte==='mes'?'month':'date'}" value="${fechaFiltroCorte.slice(0, subVistaCorte==='mes'?7:10)}" onchange="fechaFiltroCorte=this.value; render();" class="input-box bg-deep text-center font-bold text-lg border-white/10 w-full"></div></div>
+                    
+                    <div class="glass p-1.5 rounded-xl flex justify-between mb-8">
+                        <button onclick="subVistaCorte='dia'; render();" class="flex-1 py-2.5 rounded-lg text-[10px] font-bold uppercase transition-all ${subVistaCorte === 'dia' ? 'bg-white text-black shadow' : 'text-slate-400'}">Día</button>
+                        <button onclick="subVistaCorte='semana'; render();" class="flex-1 py-2.5 rounded-lg text-[10px] font-bold uppercase transition-all ${subVistaCorte === 'semana' ? 'bg-white text-black shadow' : 'text-slate-400'}">Semana</button>
+                        <button onclick="subVistaCorte='mes'; render();" class="flex-1 py-2.5 rounded-lg text-[10px] font-bold uppercase transition-all ${subVistaCorte === 'mes' ? 'bg-white text-black shadow' : 'text-slate-400'}">Mes</button>
+                    </div>
+
+                    <div class="mb-2 w-full">
+                        <label class="text-[9px] font-bold text-slate-500 uppercase ml-2 mb-1 block">Periodo de Análisis</label>
+                        <div class="w-full">
+                            <input type="${subVistaCorte==='mes'?'month':'date'}" value="${fechaFiltroCorte.slice(0, subVistaCorte==='mes'?7:10)}" 
+                                   onchange="fechaFiltroCorte=this.value; render();" class="input-box bg-deep text-center font-bold text-lg border-white/10 w-full">
+                        </div>
+                    </div>
+                    
                     <p class="text-center text-[10px] text-gold font-bold mb-8 uppercase tracking-widest opacity-80 border-b border-gold/10 pb-4">${data.rangoTexto}</p>
                     
                     <div class="flex gap-3 mb-8">
-                        <button onclick="exportarReporte()" class="flex-1 border border-white/10 bg-white/5 py-3 rounded-xl text-xs font-bold uppercase text-slate-300 hover:bg-white/10 transition flex items-center justify-center gap-2">📄 PDF / Imprimir</button>
-                        <button onclick="exportarExcel()" class="flex-1 border border-emerald-500/20 bg-emerald-500/10 py-3 rounded-xl text-xs font-bold uppercase text-emerald-400 hover:bg-emerald-500/20 transition flex items-center justify-center gap-2">📊 Excel</button>
+                        <button onclick="exportarReporte()" class="flex-1 border border-white/10 bg-white/5 py-3 rounded-xl text-xs font-bold uppercase text-slate-300 hover:bg-white/10 transition flex items-center justify-center gap-2">📄 Reporte PDF</button>
+                        <button onclick="exportarExcel()" class="flex-1 border border-emerald-500/20 bg-emerald-500/10 py-3 rounded-xl text-xs font-bold uppercase text-emerald-400 hover:bg-emerald-500/20 transition flex items-center justify-center gap-2">📊 Exportar Excel</button>
                     </div>
 
-                    <div class="glass-high rounded-3xl p-6 mb-8 text-center relative overflow-hidden"><div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-1 bg-gold/50 rounded-b-full shadow-[0_0_20px_rgba(212,175,55,0.5)]"></div><p class="text-[10px] text-slate-400 font-bold uppercase mb-2 tracking-widest">Flujo Neto</p><h3 class="text-5xl font-bold text-white tracking-tight mb-6">$${data.neto.toLocaleString()}</h3><div class="grid grid-cols-2 gap-4 border-t border-white/5 pt-4"><div><p class="text-[9px] text-emerald-400 uppercase font-bold mb-1">Ingresos</p><p class="text-xl font-bold text-white">$${data.ingresos.toLocaleString()}</p></div><div class="border-l border-white/5"><p class="text-[9px] text-red-400 uppercase font-bold mb-1">Gastos</p><p class="text-xl font-bold text-white">$${data.gastos.toLocaleString()}</p></div></div></div>
-                    <div><h3 class="text-[10px] font-bold text-slate-500 uppercase mb-4 tracking-widest ml-2">Historial</h3><div class="space-y-3">${data.lista.length===0?'<div class="text-center py-10 opacity-30"><p class="text-4xl mb-2">🍃</p><p class="text-xs uppercase font-bold">Sin movimientos</p></div>':''} ${data.lista.map(m=>`<div class="glass p-4 rounded-2xl flex justify-between items-center group hover:bg-white/5 transition-colors"><div class="flex-1"><div class="flex items-center gap-2 mb-1"><span class="w-1.5 h-1.5 rounded-full ${m.tipo==='ingreso'?'bg-emerald-400':'bg-red-400'}"></span><p class="text-xs font-bold text-white">${m.cat}</p></div><p class="text-[10px] text-slate-400">${m.desc||'Sin nota'} <span class="text-slate-600 mx-1">•</span> ${m.metodo}</p></div><div class="text-right ml-4"><p class="text-sm font-bold ${m.tipo==='ingreso'?'text-emerald-400':'text-white'}">$${parseFloat(m.monto).toLocaleString()}</p><div class="flex justify-end gap-3 mt-2 opacity-60 group-hover:opacity-100 transition-opacity"><button onclick="editarMovimiento(${m.index})" class="text-[9px] text-gold font-bold uppercase">Editar</button><button onclick="eliminarMovimiento(${m.index})" class="text-[9px] text-red-500 font-bold uppercase">Borrar</button></div></div></div>`).join('')}</div></div>
+                    <div class="glass-high rounded-3xl p-6 mb-8 text-center relative overflow-hidden">
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-1 bg-gold/50 rounded-b-full shadow-[0_0_20px_rgba(212,175,55,0.5)]"></div>
+                        <p class="text-[10px] text-slate-400 font-bold uppercase mb-2 tracking-widest">Flujo Neto</p>
+                        <h3 class="text-5xl font-bold text-white tracking-tight mb-6">$${data.neto.toLocaleString()}</h3>
+                        <div class="grid grid-cols-2 gap-4 border-t border-white/5 pt-4">
+                            <div><p class="text-[9px] text-emerald-400 uppercase font-bold mb-1">Ingresos</p><p class="text-xl font-bold text-white">$${data.ingresos.toLocaleString()}</p></div>
+                            <div class="border-l border-white/5"><p class="text-[9px] text-red-400 uppercase font-bold mb-1">Gastos</p><p class="text-xl font-bold text-white">$${data.gastos.toLocaleString()}</p></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-[10px] font-bold text-slate-500 uppercase mb-4 tracking-widest ml-2">Historial</h3>
+                        <div class="space-y-3">
+                            ${data.lista.length === 0 ? '<div class="text-center py-10 opacity-30"><p class="text-4xl mb-2">🍃</p><p class="text-xs uppercase font-bold">Sin movimientos</p></div>' : ''}
+                            ${data.lista.map(m => `
+                                <div class="glass p-4 rounded-2xl flex justify-between items-center group hover:bg-white/5 transition-colors">
+                                    <div class="flex-1">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <span class="w-1.5 h-1.5 rounded-full ${m.tipo==='ingreso'?'bg-emerald-400':'bg-red-400'}"></span>
+                                            <p class="text-xs font-bold text-white">${m.cat}</p>
+                                        </div>
+                                        <p class="text-[10px] text-slate-400">${m.desc || 'Sin nota'} <span class="text-slate-600 mx-1">•</span> ${m.metodo}</p>
+                                    </div>
+                                    <div class="text-right ml-4">
+                                        <p class="text-sm font-bold ${m.tipo === 'ingreso' ? 'text-emerald-400' : 'text-white'}">$${parseFloat(m.monto).toLocaleString()}</p>
+                                        <div class="flex justify-end gap-3 mt-2 opacity-60 group-hover:opacity-100 transition-opacity">
+                                            <button onclick="editarMovimiento(${m.index})" class="text-[9px] text-gold font-bold uppercase hover:underline">Editar</button>
+                                            <button onclick="eliminarMovimiento(${m.index})" class="text-[9px] text-red-500 font-bold uppercase hover:underline">Borrar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
                 </div>`;
         }
 
@@ -192,12 +383,25 @@
                             <input type="text" id="meta_nombre" placeholder="Nombre de la Meta" class="input-box bg-deep">
                             <div class="grid grid-cols-2 gap-4">
                                 <input type="number" id="meta_monto" placeholder="Monto $" class="input-box bg-deep">
-                                <div><label class="text-[9px] font-bold text-gold uppercase ml-1 block mb-1">Fecha Límite</label><input type="date" id="meta_fecha" class="input-box bg-deep text-xs w-full"></div>
+                                <div>
+                                    <label class="text-[9px] font-bold text-gold uppercase ml-1 block mb-1">Fecha Límite</label>
+                                    <input type="date" id="meta_fecha" class="input-box bg-deep text-xs w-full">
+                                </div>
                             </div>
-                            <div class="flex gap-3 pt-2"><button onclick="agregarMeta('ahorro')" class="flex-1 bg-slate-800 text-white py-3 rounded-xl font-bold uppercase text-[10px] border border-white/5 hover:bg-slate-700">Ahorro ✈️</button><button onclick="agregarMeta('deuda')" class="flex-1 bg-red-900/30 text-red-200 py-3 rounded-xl font-bold uppercase text-[10px] border border-red-500/20 hover:bg-red-900/50">Deuda 📉</button></div>
+                            <div class="flex gap-3 pt-2">
+                                <button onclick="agregarMeta('ahorro')" class="flex-1 bg-slate-800 text-white py-3 rounded-xl font-bold uppercase text-[10px] border border-white/5 hover:bg-slate-700">Ahorro ✈️</button>
+                                <button onclick="agregarMeta('deuda')" class="flex-1 bg-red-900/30 text-red-200 py-3 rounded-xl font-bold uppercase text-[10px] border border-red-500/20 hover:bg-red-900/50">Deuda 📉</button>
+                            </div>
                         </div>
                     </div>
-                    <div class="space-y-4">${config.metas.map((m, i) => `<div class="glass p-5 rounded-2xl border-l-4 ${m.tipo==='deuda'?'border-red-500':'border-gold'} relative overflow-hidden"><div class="flex justify-between items-start relative z-10"><div><h4 class="font-bold text-lg text-white mb-1">${m.nombre}</h4><p class="text-[10px] text-slate-400 uppercase tracking-wider">Meta: $${parseFloat(m.monto).toLocaleString()}</p></div><div class="text-right"><p class="text-[9px] font-bold bg-white/10 px-2 py-1 rounded text-white">${m.fecha}</p><button onclick="borrarMeta(${i})" class="text-red-500 text-[9px] font-bold uppercase mt-3">Eliminar</button></div></div></div>`).join('')}</div>
+                    <div class="space-y-4">
+                        ${config.metas.map((m, i) => `<div class="glass p-5 rounded-2xl border-l-4 ${m.tipo==='deuda'?'border-red-500':'border-gold'} relative overflow-hidden">
+                            <div class="flex justify-between items-start relative z-10">
+                                <div><h4 class="font-bold text-lg text-white mb-1">${m.nombre}</h4><p class="text-[10px] text-slate-400 uppercase tracking-wider">Meta: $${parseFloat(m.monto).toLocaleString()}</p></div>
+                                <div class="text-right"><p class="text-[9px] font-bold bg-white/10 px-2 py-1 rounded text-white">${m.fecha}</p><button onclick="borrarMeta(${i})" class="text-red-500 text-[9px] font-bold uppercase mt-3">Eliminar</button></div>
+                            </div>
+                        </div>`).join('')}
+                    </div>
                 </div>`;
         }
 
@@ -267,30 +471,17 @@
             window.print();
         }
 
-        // --- EXPORTAR EXCEL (CSV) ---
+        // --- EXPORTAR EXCEL ---
         function exportarExcel() {
             const data = calcularCorte(subVistaCorte, fechaFiltroCorte);
-            // El \uFEFF es el BOM para que Excel lea acentos correctamente
             let csvContent = "\uFEFFFecha,Hora,Categoría,Descripción,Método,Ingreso,Gasto\n";
-
             data.lista.forEach(m => {
-                const fechaParts = m.fecha.split('T');
-                const fecha = fechaParts[0];
-                const hora = fechaParts[1] || '';
-                
-                // Limpiar textos para no romper el CSV
-                const cat = (m.cat || '').replace(/,/g, '');
-                const desc = (m.desc || '').replace(/,/g, ' '); // Quitar comas de descripciones
-                const metodo = (m.metodo || '').replace(/,/g, '');
-                
-                // Separar ingreso y gasto
-                const ingreso = m.tipo === 'ingreso' ? m.monto : 0;
-                const gasto = m.tipo === 'gasto' ? m.monto : 0;
-
-                csvContent += `${fecha},${hora},${cat},${desc},${metodo},${ingreso},${gasto}\n`;
+                const parts = m.fecha.split('T');
+                const cat = (m.cat||'').replace(/,/g,'');
+                const desc = (m.desc||'').replace(/,/g,' ');
+                const met = (m.metodo||'').replace(/,/g,'');
+                csvContent += `${parts[0]},${parts[1]||''},${cat},${desc},${met},${m.tipo==='ingreso'?m.monto:0},${m.tipo==='gasto'?m.monto:0}\n`;
             });
-
-            // Crear link de descarga invisible
             const encodedUri = encodeURI("data:text/csv;charset=utf-8," + csvContent);
             const link = document.createElement("a");
             link.setAttribute("href", encodedUri);
@@ -300,7 +491,7 @@
             document.body.removeChild(link);
         }
 
-        // --- LÓGICA ESTÁNDAR ---
+        // --- LÓGICA ---
         function updateNombre(v) { config.nombre = v; save(); render(); }
         function registrar() {
             const m = document.getElementById('monto').value; const fecha = document.getElementById('fecha_mov').value;
